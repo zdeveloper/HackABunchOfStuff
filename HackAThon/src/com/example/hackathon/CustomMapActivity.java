@@ -228,7 +228,7 @@ public class CustomMapActivity extends Activity implements LocationListener {
 				}
 			}
 		});
-
+		populateMap();
 	}
 
 	public void sendDataToDatabase(User user) {
