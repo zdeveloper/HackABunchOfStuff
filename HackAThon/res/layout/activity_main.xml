@@ -9,13 +9,47 @@
     android:orientation="horizontal"
     android:useDefaultMargins="true" >
 
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:text="Add 5" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
+<<<<<<< HEAD
+        
+        
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+        </ListView>
+     
+        
+        
+        <Button
+            android:id="@+id/button_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight=".3"
+            android:text="Friend" />
+        
+
+        <Button
+            android:id="@+id/button_foe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_vertical"
+            android:layout_weight=".3"
+            android:text="Foe" />
+
+        <Button
+            android:id="@+id/button_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_weight=".3"
+            android:text="Flag" />
+
+=======
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Flag" />
+>>>>>>> 67dfd47923f6495c4a9a5e98432369c117bf1456
     </LinearLayout>
 
 </FrameLayout>
