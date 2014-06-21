@@ -1,7 +1,5 @@
 package com.example.hackathon;
 
-import com.parse.Parse;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.widget.ArrayAdapter;
@@ -17,8 +15,6 @@ public class IncidentsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		Parse.initialize(this, "ugI5MBgBhmSwrjKRZR0SRQHdiuJktk256r4xEAzZ", "WpLvtFiNRSmbkVSjdEkUOw9gAPYirYHw920g81Mo");
 		
 		setContentView(R.layout.activity_incidents);
 		db = new Database(this);

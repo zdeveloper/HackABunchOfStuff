@@ -1,5 +1,7 @@
 package com.example.hackathon;
 
+import com.parse.Parse;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,6 +20,8 @@ public class MenuActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
+		
+		Parse.initialize(this, "ugI5MBgBhmSwrjKRZR0SRQHdiuJktk256r4xEAzZ", "WpLvtFiNRSmbkVSjdEkUOw9gAPYirYHw920g81Mo");
 		
 		findViewById(R.id.button_map).setOnClickListener(new OnClickListener() {
 			@Override
