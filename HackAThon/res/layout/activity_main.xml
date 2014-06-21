@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:alignmentMode="alignBounds"
-    android:background="@drawable/map"
+    android:background="@drawable/new_map"
     android:layoutMode="clipBounds"
     android:orientation="horizontal"
     android:useDefaultMargins="true" >
