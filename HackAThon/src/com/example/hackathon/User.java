@@ -1,20 +1,22 @@
 package com.example.hackathon;
 
+import com.parse.ParseGeoPoint;
+
 public class User {
 
 	public User(String username, String password, String email, String city,
-			String location, String channel, String precinct, String type,
-			String[] badges) {
+			ParseGeoPoint parseGeoPoint, String channel, String precinct, String type,
+			String string) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.city = city;
-		this.location = location;
+		this.location = parseGeoPoint;
 		this.channel = channel;
 		this.precinct = precinct;
 		this.type = type;
-		this.badges = badges;
+		this.badges = string;
 	}
 	public String getUsername() {
 		return username;
@@ -40,10 +42,10 @@ public class User {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public String getLocation() {
+	public ParseGeoPoint getLocation() {
 		return location;
 	}
-	public void setLocation(String location) {
+	public void setLocation(ParseGeoPoint location) {
 		this.location = location;
 	}
 	public String getChannel() {
@@ -64,21 +66,21 @@ public class User {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String[] getBadges() {
+	public String getBadges() {
 		return badges;
 	}
-	public void setBadges(String[] badges) {
+	public void setBadges(String badges) {
 		this.badges = badges;
 	}
 	String username;
 	String password;
 	String email;
 	String city;
-	String location; 
+	ParseGeoPoint location; 
 	String channel;
 	String precinct;
 	String type;
-	String[] badges;
+	String badges;
 	
 	
 	

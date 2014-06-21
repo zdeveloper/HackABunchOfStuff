@@ -1,8 +1,12 @@
 package com.example.hackathon;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -22,6 +27,7 @@ public class CustomMapActivity extends Activity implements LocationListener {
 
 	private FrameLayout frame;
 	private ArrayList<Person> persons = new ArrayList<Person>();
+	private ArrayList<User> users = new ArrayList<User>();
 
 	// private CustomMapActivity activity = this;
 
@@ -36,9 +42,6 @@ public class CustomMapActivity extends Activity implements LocationListener {
 
 		frame = (FrameLayout) findViewById(R.id.frameLayout);
 		self = new Person(this);
-		// addPerson(0, "Eric");
-
-		// addImg();
 
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -54,11 +57,45 @@ public class CustomMapActivity extends Activity implements LocationListener {
 			}
 		});
 
+		Thread otherUsersDataUpdate = new Thread() {
+			@Override
+			public void run() {
+				try {
+					while (true) {
+						sleep(1000);
+						getDattafromDataBase();
+					}
+				} catch (InterruptedException e) {
+					Log.d("DEBUG", "Hah something went wrong!");
+				}
+
+			}
+		};
+		otherUsersDataUpdate.start();
+
+		Thread currentUserDataUpdate = new Thread() {
+			@Override
+			public void run() {
+				try {
+					while (true) {
+						sleep(1000);
+						// sendDataToDatabase(new User(username, password,
+						// email, city, parseGeoPoint, channel, precinct, type,
+						// string));
+					}
+				} catch (InterruptedException e) {
+					Log.d("DEBUG", "Hah something went wrong!");
+				}
+
+			}
+		};
+		currentUserDataUpdate.start();
 	}
 
-	public boolean addPerson(int id, String name) {
+	public Person addPerson() {
 		Person person = new Person(this);
-		return persons.add(person);
+		persons.add(person);
+		return person;
 	}
 
 	public void addImg() {
@@ -100,7 +137,6 @@ public class CustomMapActivity extends Activity implements LocationListener {
 
 			button.getBackground().setColorFilter(color[0],
 					PorterDuff.Mode.MULTIPLY);
-
 		}
 
 		public void setEnemy() {
@@ -131,6 +167,20 @@ public class CustomMapActivity extends Activity implements LocationListener {
 		}
 
 	}
+	
+	public void populateMap()
+	{
+		for (User user : users) {
+			Person person = addPerson();
+			if(user.getType().equals("Friend"))
+			{
+				person.setFriendly();
+			} else if(user.getType().equals("Enemy"))
+			{
+				person.setEnemy();;
+			}
+		}
+	}
 
 	@Override
 	public void onLocationChanged(Location loc) {
@@ -148,19 +198,50 @@ public class CustomMapActivity extends Activity implements LocationListener {
 	public void onProviderDisabled(String provider) {
 	}
 
-	
-	public void sendDataToDatabase(User user)
-	{
-		ParseObject gameScore = new ParseObject("User");
-		gameScore.put("username", user.getUsername());
-		gameScore.put("password", user.getPassword());
-		gameScore.put("type", user.getType());
-		gameScore.put("location", user.getLocation());
-		gameScore.put("channel", user.getChannel());
-		gameScore.put("city", user.getCity());
-		gameScore.saveInBackground();
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void getDattafromDataBase() {
+
+		ParseQuery query = new ParseQuery("User");
+		// query.whereNotEqualTo("bldName", "");
+		// this runs in the background and fires a callback when data is
+		// retrieved
+		query.findInBackground(new FindCallback() {
+
+			public void done(List usersInfo, ParseException e) {
+				try {
+					for (int i = 0; i < usersInfo.size(); i++) {
+						ParseObject obj = (ParseObject) usersInfo.get(i);
+						User user = new User(obj.getString("username"), obj
+								.getString("password"), obj.getString("email"),
+								obj.getString("city"), obj
+										.getParseGeoPoint("location"), obj
+										.getString("channel"), obj
+										.getString("precinct"), obj
+										.getString("type"),
+								"Badges Not Implemented");
+						users.add(user); // adding user
+					}
+
+				} catch (Exception e2) {
+
+				}
+			}
+		});
+
 	}
-	
+
+	public void sendDataToDatabase(User user) {
+		ParseObject query = new ParseObject("User");
+		query.put("username", user.getUsername());
+		query.put("password", user.getPassword());
+		query.put("type", user.getType());
+		query.put("location", user.getLocation());
+		query.put("channel", user.getChannel());
+		query.put("city", user.getCity());
+		query.saveInBackground();
+	}
+
 	@Override
 	public void onProviderEnabled(String provider) {
 	}
