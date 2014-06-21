@@ -1,6 +1,7 @@
 package com.example.hackathon;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,11 +18,11 @@ import android.util.Log;
 public class Database {
 	
 	
-	Activity activity;
+	IncidentsActivity activity;
 	Context context;
-
+	
 	@SuppressWarnings("unchecked")
-	public Database(Activity activity) {
+	public Database(final IncidentsActivity activity) {
 		
 		
 		this.activity = activity;
@@ -29,25 +30,10 @@ public class Database {
 
 		Log.d("DEBUG", "Test ");
 
-		ParseQuery query = new ParseQuery("incident");
-		// query.whereNotEqualTo("bldName", "");
-		//this runs in the background and fires a callback when data is retrieved
-		query.findInBackground(new FindCallback() {
-
-			public void done(List scoreList, ParseException e) {
-				try{
-					for (int i = 0; i < scoreList.size(); i++) {
-						ParseObject obj = (ParseObject)scoreList.get(i);
-						Log.d("DEBUG", obj.getObjectId() );
-					}	
-					
-				} catch(Exception e2)
-				{
-					
-				}
-			}
-		});
+		
 	}
+
+
 
 
 }
