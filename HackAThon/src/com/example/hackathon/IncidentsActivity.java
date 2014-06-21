@@ -10,7 +10,15 @@ import com.parse.ParseQuery;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -78,6 +86,15 @@ public class IncidentsActivity extends Activity {
 				getIncidents());
 		
 		incidentListView.setAdapter(adapter);
+		
+		incidentListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int position,
+					long arg3) {
+				startDialog(position);
+			}
+		});
 	}
 
 	
@@ -92,5 +109,25 @@ public class IncidentsActivity extends Activity {
 
 	public void setIncidents(ArrayList<Incident> incidents) {
 		this.incidents = incidents;
+	}
+	
+	private void startDialog(int i)
+	{
+		AlertDialog.Builder builder = new Builder(this);
+		Dialog dialog;
+		builder.setTitle( incidents.get(i).getType());
+		builder.setMessage(incidents.get(i).getDescription() + "\n" + "Lat: " +incidents.get(i).getLatitude() + " Long: "+ incidents.get(i).getLongitude());
+		
+		builder.setPositiveButton("OK", new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		
+		dialog = builder.create();
+		dialog.show();
+		
 	}
 }
